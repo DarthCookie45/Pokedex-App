@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokédex App</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Search Area -->
+    <div class="search-container">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search Pokémon by name or ID"
+      />
+      <button id="searchBtn">Search</button>
+      <button id="randomBtn">Random</button>
+    </div>
+
+    <!-- Pokémon Info Card -->
+    <div id="pokemonContainer" class="pokemon-container">
+      <!-- Image + Basic Info -->
+      <div class="top-section">
+        <div class="sprite-container" id="spriteContainer">
+          <!-- Sprites of Pokémon (default, shiny, forms) -->
+        </div>
+
+        <div class="basic-info">
+          <h2 id="pokemonName">Name</h2>
+          <p><strong>Type(s):</strong> <span id="pokemonTypes"></span></p>
+          <p>
+            <strong>National Pokédex #:</strong> <span id="pokemonId"></span>
+          </p>
+          <p><strong>Habitat:</strong> <span id="pokemonHabitat"></span></p>
+        </div>
+      </div>
+
+      <!-- Abilities -->
+      <div class="abilities card">
+        <h3>Abilities</h3>
+        <ul id="pokemonAbilities"></ul>
+      </div>
+
+      <!-- Base Stats -->
+      <div class="stats card">
+        <h3>Base Stats</h3>
+        <div id="pokemonStats">
+          <!-- Each stat will be shown with a coloured bar dependant on its value -->
+        </div>
+      </div>
+
+      <!-- Weaknesses -->
+      <div class="weaknesses card">
+        <h3>Weaknesses</h3>
+        <div id="pokemonWeaknesses">
+          <!-- Type matchups with multipliers -->
+        </div>
+      </div>
+
+      <!-- Evolution Tree -->
+      <div class="evolution card">
+        <h3>Evolution Tree</h3>
+        <div id="pokemonEvolution">
+          <!-- Evolution chain -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Search History -->
+    <div id="history" class="history-container">
+      <!-- Search history buttons -->
+    </div>
+
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
