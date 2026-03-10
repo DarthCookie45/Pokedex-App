@@ -110,12 +110,13 @@ function renderPokemonCard(pokemon, speciesData, evoData) {
   });
 
   /* -- Evolution -- */
-  if (evoData?.chain) {
-    const chainStr = flattenEvolutionChain(evoData.chain);
-    evolutionDiv.innerHTML = `<p>${chainStr}</p>`;
-  } else {
-    evolutionDiv.innerHTML = "<p>No evolution data</p>";
-  }
+if (evoData?.chain) {
+  const chainStr = flattenEvolutionChain(evoData.chain)
+    .replace(/\b\w/g, char => char.toUpperCase());
+  evolutionDiv.innerHTML = `<p>${chainStr}</p>`;
+} else {
+  evolutionDiv.innerHTML = "<p>No evolution data</p>";
+}
 }
 
 /* -- Utility functions -- */
