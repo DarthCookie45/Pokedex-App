@@ -145,10 +145,15 @@ function showError(msg = "Pokémon not found") {
 }
 
 function animateStatFills() {
+  const MAX_STAT = 255;
+
   document.querySelectorAll(".stat-fill").forEach(fill => {
     const val = Number(fill.dataset.value) || 0;
-    const targetPercent = Math.min(val / 2, 100);
-    requestAnimationFrame(() => { fill.style.width = targetPercent + "%"; });
+    const targetPercent = Math.min((val / MAX_STAT) * 100, 100);
+
+    requestAnimationFrame(() => {
+      fill.style.width = targetPercent + "%";
+    });
   });
 }
 
