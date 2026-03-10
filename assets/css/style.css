@@ -16,6 +16,10 @@ body {
   margin: auto;
 }
 
+.app-logo {
+  height: 150px;
+}
+
 /*-- Search Bar --*/
 .search-container {
   display: flex;
@@ -36,15 +40,32 @@ body {
 }
 
 .search-container button {
+  font-weight: bold;
   padding: 12px 18px;
   font-size: 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background: #3b82f6;
-  color: white;
-  transition: background 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
   flex-shrink: 0;
+}
+
+#searchBtn {
+  background: #ffcb05;
+  color: black;
+}
+
+#searchBtn:hover {
+  background: #e6b800;
+}
+
+#randomBtn {
+  background: #2a75bb;
+  color: white;
+}
+
+#randomBtn:hover {
+  background: #1f5fa0;
 }
 
 .search-container button:hover {
@@ -93,6 +114,19 @@ body {
   word-wrap: break-word;
 }
 
+/*-- Abilities Section --*/
+
+#pokemonAbilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+ul {
+  list-style: none;
+}
+
 /*-- White Card Sections --*/
 .card {
   background: white;
@@ -110,23 +144,30 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
-  flex-wrap: wrap;
+
 }
 
 .stat-name {
   width: 90px;
   font-weight: bold;
-  min-width: 70px
+
 }
 
 .stat-bar {
   flex: 1;
+  max-width: 90%;
   height: 14px;
   border-radius: 8px;
   overflow: hidden;
   background: #eee;
-  margin-left: 10px;
-  position: relative;
+  margin: 0 10px;
+
+}
+
+.stat-val {
+  width: 40px;
+  text-align: right;
+  font-weight: bold;
 }
 
 .stat-fill {
@@ -197,5 +238,9 @@ body {
 
   .sprite-container {
     flex: none;
+  }
+
+  .app-logo {
+    height: 120px;
   }
 }
