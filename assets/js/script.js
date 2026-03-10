@@ -19,7 +19,7 @@ let searchHistory = [];
 /* -- Event listeners -- */
 searchBtn.addEventListener("click", () => {
   const q = String(searchInput.value || "").trim();
-  if (!q) return showError("Please type a Pokémon name or ID");
+  if (!q) return showError("Please type a Pokémon name or dex number (1 - 1025)");
   fetchPokemon(q);
 });
 searchInput.addEventListener("keydown", (e) => {
@@ -65,7 +65,7 @@ async function fetchPokemon(nameOrId) {
 
 /* -- Render helpers -- */
 function renderPokemonCard(pokemon, speciesData, evoData) {
-  // Sprites
+  /*-- Sprites --*/
   spriteContainer.innerHTML = "";
   const front = pokemon.sprites?.front_default;
   const shiny = pokemon.sprites?.front_shiny;
