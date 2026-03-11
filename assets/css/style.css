@@ -1,5 +1,5 @@
 /*-- Google fonts --*/
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:wght@300;400&family=Macondo&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 /*-- Global --*/
 * {
@@ -36,7 +36,7 @@ body {
 .search-container input {
   padding: 10px;
   font-size: 16px;
-  width: 250px;
+  width: 350px;
   max-width: 100%;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -69,10 +69,6 @@ body {
 
 #randomBtn:hover {
   background: #1f5fa0;
-}
-
-.search-container button:hover {
-  background: #2563eb;
 }
 
 .search-buttons {
@@ -228,7 +224,7 @@ ul {
   color: white;
 }
 .weak-immune { background-color: red; }
-.weak-resist { background-color: orange; color: black; }
+.weak-resist { background-color: #ff8c00; color: black; }
 .weak-neutral { background-color: #333; }
 .weak-strong { background-color: green; }
 
