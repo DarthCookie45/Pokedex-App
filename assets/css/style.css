@@ -55,7 +55,7 @@ body {
 
 #searchBtn {
   background: #ffcb05;
-  color: black;
+  color: #2a75bb;
 }
 
 #searchBtn:hover {
@@ -64,7 +64,7 @@ body {
 
 #randomBtn {
   background: #2a75bb;
-  color: white;
+  color: #ffcb05;
 }
 
 #randomBtn:hover {
