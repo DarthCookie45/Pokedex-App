@@ -23,7 +23,7 @@ body {
   height: 150px;
 }
 
-/*-- Search Bar --*/
+/*-- Search Bar and Buttons --*/
 .search-container {
   display: flex;
   justify-content: center;

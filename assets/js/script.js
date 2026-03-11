@@ -16,7 +16,7 @@ const evolutionDiv = document.getElementById("pokemonEvolution");
 
 let searchHistory = [];
 
-/* -- Event listeners -- */
+/*-- Event listeners --*/
 searchBtn.addEventListener("click", () => {
   const q = String(searchInput.value || "").trim();
   if (!q) return showError("Please type a Pokémon name or dex number (1 - 1025)");
@@ -30,7 +30,7 @@ randomBtn.addEventListener("click", () => {
   fetchPokemon(randomId);
 });
 
-/* -- Fetch pipeline -- */
+/*-- Fetch pipeline --*/
 async function fetchPokemon(nameOrId) {
   clearAllLoading();
   const query = String(nameOrId).trim();
@@ -63,7 +63,7 @@ async function fetchPokemon(nameOrId) {
   }
 }
 
-/* -- Render helpers -- */
+/*-- Render helpers --*/
 function renderPokemonCard(pokemon, speciesData, evoData) {
   /*-- Sprites --*/
   spriteContainer.innerHTML = "";
@@ -73,18 +73,18 @@ function renderPokemonCard(pokemon, speciesData, evoData) {
   if (shiny) spriteContainer.insertAdjacentHTML("beforeend", `<img src="${shiny}" alt="${pokemon.name} shiny">`);
   if (!front && !shiny) spriteContainer.textContent = "No image";
 
-  /* -- Basic info -- */
+  /*-- Basic info --*/
   pokemonName.textContent = capitalize(pokemon.name);
   pokemonId.textContent = pokemon.id ? `#${pokemon.id}` : "Unknown";
   pokemonTypes.textContent = pokemon.types?.length ? pokemon.types.map(t => capitalize(t.type.name)).join(", ") : "Unknown";
   pokemonHabitat.textContent = speciesData?.habitat ? capitalize(speciesData.habitat.name) : "Unknown";
 
-  /* -- Abilities -- */
+  /*-- Abilities --*/
   abilitiesList.innerHTML = pokemon.abilities?.length
     ? pokemon.abilities.map(a => `<li>${capitalize(a.ability.name)}${a.is_hidden ? " (hidden)" : ""}</li>`).join("")
     : "<li>Unknown</li>";
 
-  /* -- Stats -- */
+  /*-- Stats --*/
   statsContainer.innerHTML = "";
   pokemon.stats.forEach(s => {
     const value = s.base_stat;
@@ -101,7 +101,7 @@ function renderPokemonCard(pokemon, speciesData, evoData) {
   });
   requestAnimationFrame(() => animateStatFills());
 
-  /* -- Weaknesses -- */
+  /*-- Weaknesses --*/
   weaknessesContainer.innerHTML = "<p>Loading...</p>";
   computeAndRenderWeaknesses(pokemon.types).then(html => {
     weaknessesContainer.innerHTML = html;
@@ -109,7 +109,7 @@ function renderPokemonCard(pokemon, speciesData, evoData) {
     weaknessesContainer.innerHTML = "<p>—</p>";
   });
 
-  /* -- Evolution -- */
+  /*-- Evolution --*/
 if (evoData?.chain) {
   const chainStr = flattenEvolutionChain(evoData.chain)
     .replace(/\b\w/g, char => char.toUpperCase());
@@ -119,7 +119,7 @@ if (evoData?.chain) {
 }
 }
 
-/* -- Utility functions -- */
+/*-- Utility functions --*/
 function clearAllLoading() {
   spriteContainer.innerHTML = "<p>Loading…</p>";
   pokemonName.textContent = "";
