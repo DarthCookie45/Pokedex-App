@@ -45,14 +45,18 @@ async function fetchPokemon(nameOrId) {
     try {
       const sRes = await fetch(pokemon.species.url);
       if (sRes.ok) speciesData = await sRes.json();
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error fetching species data:", e);
+    }
 
     let evoData = null;
     if (speciesData && speciesData.evolution_chain?.url) {
       try {
         const evoRes = await fetch(speciesData.evolution_chain.url);
         if (evoRes.ok) evoData = await evoRes.json();
-      } catch (e) {}
+      } catch (e) {
+        console.error("Error fetching evolution data:", e);
+      }
     }
 
     renderPokemonCard(pokemon, speciesData, evoData);
