@@ -1,3 +1,5 @@
+/* jshint esversion: 11, esnext: false */
+
 /* -- DOM elements -- */
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
@@ -19,7 +21,9 @@ let searchHistory = [];
 /*-- Event listeners --*/
 searchBtn.addEventListener("click", () => {
   const q = String(searchInput.value || "").trim();
-  if (!q) return showError("Please type a Pokémon name or dex number (1 - 1025)");
+  if (!q) {
+    return showError("Please type a Pokémon name or dex number (1 - 1025)");
+  }
   fetchPokemon(q);
 });
 searchInput.addEventListener("keydown", (e) => {
@@ -46,7 +50,7 @@ async function fetchPokemon(nameOrId) {
       const sRes = await fetch(pokemon.species.url);
       if (sRes.ok) speciesData = await sRes.json();
     } catch (e) {
-      console.error("Error fetching species data:", e);
+      speciesData = null;
     }
 
     let evoData = null;
@@ -55,7 +59,7 @@ async function fetchPokemon(nameOrId) {
         const evoRes = await fetch(speciesData.evolution_chain.url);
         if (evoRes.ok) evoData = await evoRes.json();
       } catch (e) {
-        console.error("Error fetching evolution data:", e);
+        evoData = null;
       }
     }
 
@@ -63,7 +67,7 @@ async function fetchPokemon(nameOrId) {
     updateHistory(pokemon.name);
   } catch (err) {
     console.error(err);
-    showError(err.message || "Error fetching Pokémon");
+    showError("Pokémon not found. Please check the name or ID and try again.");
   }
 }
 
@@ -84,9 +88,13 @@ function renderPokemonCard(pokemon, speciesData, evoData) {
   pokemonHabitat.textContent = speciesData?.habitat ? capitalize(speciesData.habitat.name) : "Unknown";
 
   /*-- Abilities --*/
-  abilitiesList.innerHTML = pokemon.abilities?.length
-    ? pokemon.abilities.map(a => `<li>${capitalize(a.ability.name)}${a.is_hidden ? " (hidden)" : ""}</li>`).join("")
-    : "<li>Unknown</li>";
+  if (pokemon.abilities?.length) {
+  abilitiesList.innerHTML = pokemon.abilities.map(a =>
+    `<li>${capitalize(a.ability.name)}${a.is_hidden ? " (hidden)" : ""}</li>`
+  ).join("");
+} else {
+  abilitiesList.innerHTML = "<li>Unknown</li>";
+}
 
   /*-- Stats --*/
   statsContainer.innerHTML = "";
