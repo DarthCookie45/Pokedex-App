@@ -17,6 +17,27 @@ const weaknessesContainer = document.getElementById("pokemonWeaknesses");
 const evolutionDiv = document.getElementById("pokemonEvolution");
 
 let searchHistory = [];
+let validPokemon = [];
+
+/* Load all valid Pokémon names once */
+async function loadPokemonList() {
+  try {
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025");
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data = await response.json();
+
+    validPokemon = data.results.map(pokemon => pokemon.name);
+
+  } catch {
+    validPokemon = [];
+  }
+}
+
+loadPokemonList();
 
 /*-- Event listeners --*/
 searchBtn.addEventListener("click", () => {
@@ -37,27 +58,71 @@ randomBtn.addEventListener("click", () => {
 /*-- Fetch pipeline --*/
 async function fetchPokemon(nameOrId) {
   clearAllLoading();
-  const query = String(nameOrId).trim();
+
+  const query = String(nameOrId).trim().toLowerCase();
+
+  /* Prevent invalid empty/symbol searches */
+  const validInput = /^[a-z0-9-]+$/i.test(query);
+
+if (!validInput) {
+  showError("Please enter a valid Pokémon name or Pokédex number.");
+  return;
+}
+
+/* Prevent impossible Pokédex numbers */
+if (!isNaN(query)) {
+  const dexNumber = Number(query);
+
+  if (dexNumber < 1 || dexNumber > 1025) {
+    showError("Please enter a Pokédex number between 1 and 1025.");
+    return;
+  }
+}
+
+/* Prevent searches for Pokémon that do not exist */
+if (isNaN(query) && !validPokemon.includes(query)) {
+  showError("Pokémon not found.");
+  return;
+}
+
   const urlSafe = encodeURIComponent(query);
 
   try {
     const pRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${urlSafe}`);
-    if (!pRes.ok) throw new Error("Pokémon not found");
+
+    if (pRes.status === 404) {
+  showError("Pokémon not found.");
+  return;
+}
+
+if (!pRes.ok) {
+  showError("Unable to retrieve Pokémon data.");
+  return;
+}
+
     const pokemon = await pRes.json();
 
     let speciesData = null;
+
     try {
       const sRes = await fetch(pokemon.species.url);
-      if (sRes.ok) speciesData = await sRes.json();
+
+      if (sRes.ok) {
+        speciesData = await sRes.json();
+      }
     } catch (e) {
       speciesData = null;
     }
 
     let evoData = null;
+
     if (speciesData && speciesData.evolution_chain?.url) {
       try {
         const evoRes = await fetch(speciesData.evolution_chain.url);
-        if (evoRes.ok) evoData = await evoRes.json();
+
+        if (evoRes.ok) {
+          evoData = await evoRes.json();
+        }
       } catch (e) {
         evoData = null;
       }
@@ -65,9 +130,9 @@ async function fetchPokemon(nameOrId) {
 
     renderPokemonCard(pokemon, speciesData, evoData);
     updateHistory(pokemon.name);
-  } catch (err) {
-    console.error(err);
-    showError("Pokémon not found. Please check the name or ID and try again.");
+
+  } catch {
+    showError("Unable to retrieve Pokémon data.");
   }
 }
 
